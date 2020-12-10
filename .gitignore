@@ -1,0 +1,12 @@
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+.pio/*
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/bookmarks.json
+
+.bin/
