@@ -3,11 +3,10 @@
 
 
 #ifndef configMEMMANG_HEAP_NB
-#define configMEMMANG_HEAP_NB      5
+#define configMEMMANG_HEAP_NB      -1
 #endif
-
 #if (configMEMMANG_HEAP_NB == -1)
-// #include "../freertos/portable/MemMang/heap_useNewlib.c"
+#include "../portable/MemMang/heap_useNewlib_ST.c"
 #elif (configMEMMANG_HEAP_NB == 1)
 #include "../freertos/portable/MemMang/heap_1.c"
 #elif (configMEMMANG_HEAP_NB == 2)
