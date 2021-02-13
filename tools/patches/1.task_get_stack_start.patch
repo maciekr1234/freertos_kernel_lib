@@ -1,0 +1,71 @@
+From bbb4a4ab364fd82839400baddfaef58f0fa9ef1c Mon Sep 17 00:00:00 2001
+From: maciekr1234 <23438866+maciekr1234@users.noreply.github.com>
+Date: Sat, 13 Feb 2021 22:55:53 +0000
+Subject: [PATCH] uint8_t* pxTaskGetStackStart( TaskHandle_t xTask)
+ PRIVILEGED_FUNCTION;
+
+---
+ include/task.h | 20 ++++++++++++++++++++
+ tasks.c        | 15 +++++++++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/include/task.h b/include/task.h
+index 66c99c56f..fe5bf54e8 100644
+--- a/include/task.h
++++ b/include/task.h
+@@ -1511,6 +1511,26 @@ TaskHandle_t xTaskGetHandle( const char * pcNameToQuery ) PRIVILEGED_FUNCTION;
+  */
+ UBaseType_t uxTaskGetStackHighWaterMark( TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
+ 
++/**
++ * task.h
++ * <PRE>uint8_t* pxTaskGetStackStart( TaskHandle_t xTask);</PRE>
++ *
++ * INCLUDE_pxTaskGetStackStart must be set to 1 in FreeRTOSConfig.h for
++ * this function to be available.
++ *
++ * Returns the start of the stack associated with xTask.  That is,
++ * the highest stack memory address on architectures where the stack grows down
++ * from high memory, and the lowest memory address on architectures where the
++ * stack grows up from low memory.
++ *
++ * @param xTask Handle of the task associated with the stack returned.
++ * Set xTask to NULL to return the stack of the calling task.
++ *
++ * @return A pointer to the start of the stack.
++ */
++uint8_t* pxTaskGetStackStart( TaskHandle_t xTask) PRIVILEGED_FUNCTION;
++
++
+ /**
+  * task.h
+  * <PRE>configSTACK_DEPTH_TYPE uxTaskGetStackHighWaterMark2( TaskHandle_t xTask );</PRE>
+diff --git a/tasks.c b/tasks.c
+index 884005af0..b7c7bf4da 100644
+--- a/tasks.c
++++ b/tasks.c
+@@ -3927,6 +3927,21 @@ static void prvCheckTasksWaitingTermination( void )
+ #endif /* INCLUDE_uxTaskGetStackHighWaterMark */
+ /*-----------------------------------------------------------*/
+ 
++
++#if (INCLUDE_pxTaskGetStackStart == 1)
++	uint8_t* pxTaskGetStackStart( TaskHandle_t xTask)
++	{
++	    TCB_t *pxTCB;
++	    UBaseType_t uxReturn;
++        (void)uxReturn;
++
++		pxTCB = prvGetTCBFromHandle( xTask );
++		return ( uint8_t * ) pxTCB->pxStack;
++	}
++
++#endif /* INCLUDE_pxTaskGetStackStart */
++/*-----------------------------------------------------------*/
++
+ #if ( INCLUDE_vTaskDelete == 1 )
+ 
+     static void prvDeleteTCB( TCB_t * pxTCB )
+-- 
+2.29.2.windows.2
+

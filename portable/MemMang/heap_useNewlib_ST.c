@@ -62,8 +62,15 @@
 // These configuration symbols could be provided by from build...
 
 #define STM_VERSION
+
+#ifndef MALLOCS_INSIDE_ISRs
+#define MALLOCS_INSIDE_ISRs 1
+#endif
+
+
 #define configISR_STACK_SIZE_WORDS (0x100)
 #define ISR_STACK_LENGTH_BYTES     (configISR_STACK_SIZE_WORDS * 4) // bytes to reserve for ISR (MSP) stack
+
 // =======================================  Configuration  ========================================
 // ================================================================================================
 
