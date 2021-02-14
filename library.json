@@ -1,6 +1,6 @@
 {
     "name": "freertos_kernel",
-    "version": "10.4.3-2",
+    "version": "10.4.3-3",
     "keywords": "rtos, timing, thread, task, mutex, semaphore",
     "description": "FreeRTOS kernel as pio library.",
     "repository": {
@@ -15,7 +15,8 @@
     },
     "export": {
         "exclude": [
-            ".bin"
+            ".bin",
+            "tools"
         ]
     }
 }
