@@ -1,10 +1,21 @@
 #pragma once
 
 #include "stm32_def.h"
+#include "FreeRTOSConfig.h"
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#if defined(configUSE_CUSTOM_PORT) && defined(configCUSTOM_PORT_PORTMACRO)
+#if __has_include(configCUSTOM_PORT_PORTMACRO)
+#include configCUSTOM_PORT_PORTMACRO
+#else
+#error "configCUSTOM_PORT_PORTMACRO not found!"
+#endif 
+#else 
+
 
 
 #ifndef __CORTEX_M
@@ -40,6 +51,8 @@ extern "C" {
 #else
 #include "../freertos/portable/GCC/ARM_CM7/r0p1/portmacro.h"
 #endif
+#endif
+
 #endif
 
 #ifdef __cplusplus

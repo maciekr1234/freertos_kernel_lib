@@ -1,10 +1,20 @@
 
 #include "stm32_def.h"
+#include "FreeRTOSConfig.h"
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+
+#if defined(configUSE_CUSTOM_PORT) && defined(configCUSTOM_PORT_SOURCE)
+#if __has_include(configCUSTOM_PORT_SOURCE)
+#include configCUSTOM_PORT_SOURCE
+#else
+#error "configCUSTOM_PORT_SOURCE not found!"
+#endif
+#else
 
 #ifndef __CORTEX_M
 #pragma GCC error "no \"__CORTEX_M\" definition"
@@ -40,7 +50,7 @@ extern "C" {
 #include "../freertos/portable/GCC/ARM_CM7/r0p1/port.c"
 #endif
 #endif
-
+#endif
 #ifdef __cplusplus
 } // extern "C"
 #endif
